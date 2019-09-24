@@ -42,20 +42,20 @@ public class ListOrderImpl implements listOrder {
 	
 	
 	public void addorder(String od_id,String sc_id,String od_date,String od_state) throws Exception{
-		//连接数据库
+		//杩炴帴鏁版嵁搴�
 		try{
 			DBConnect dbc = new DBConnect();
 			Connection conn = dbc.getConnection();
 			String sql="insert into `mydb`.`ORDER` (`order_id`,`shoppingcart_id`,`order_date`,`order_state`) "
 					+ "VALUES (?,?,?,?)";
 			PreparedStatement pstm=conn.prepareStatement(sql);
-			//设定插入的值
+			//璁惧畾鎻掑叆鐨勫��
 			pstm.setString(1, od_id);
 			pstm.setString(2,sc_id);
 			pstm.setString(3,od_date);
 			pstm.setString(4, od_state);
 			pstm.executeUpdate(sql);
-			//关闭数据库
+			//鍏抽棴鏁版嵁搴�
 			DBConnect.close(null, pstm, conn);
 		}catch(SQLException e){
 			e.printStackTrace();
