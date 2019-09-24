@@ -19,7 +19,8 @@ public class ListPrdImpl implements ListProduct{
 	public List<Product> ListPrd() throws Exception {
 		// TODO Auto-generated method stub
 		try {
-			//连接数据库
+			//杩炴帴鏁版嵁搴�
+			int flag=0;
 			DBConnect dbc =new DBConnect();
 			Connection conn=dbc.getConnection();
 			PreparedStatement pstm = null;
@@ -27,9 +28,11 @@ public class ListPrdImpl implements ListProduct{
 			pstm = conn.prepareStatement(sql);
 			ResultSet rs = pstm.executeQuery(sql);
 			List<Product> p = new ArrayList<Product>();
-			//将结果集的产品数据加入列表
+			//灏嗙粨鏋滈泦鐨勪骇鍝佹暟鎹姞鍏ュ垪琛�
 			Product hs = null;
 			while(rs.next()){
+				flag++;
+				if(flag>2)break;
 				hs=new Product();
 				hs.setPrdname(rs.getString("merchandise_name"));
 				hs.setPrdprice(rs.getLong("merchandise_price"));
@@ -37,7 +40,7 @@ public class ListPrdImpl implements ListProduct{
 				hs.setPrdimages(rs.getString("image"));
 				p.add(hs);
 			}
-			//关闭数据库
+			//鍏抽棴鏁版嵁搴�
 			DBConnect.close(rs, pstm, conn);
 			return p;
 		} catch (SQLException e) {
